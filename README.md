@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/preview1.png" alt="preview">
+  <img src="src/assets/preview1.png" alt="preview">
 </p>
 
-# TODO - AP
+# TODO - APP
