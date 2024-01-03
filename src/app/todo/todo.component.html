@@ -1,0 +1,66 @@
+<section class="bg-background-200 p-7 w-[450px] mt-8 mx-auto rounded-lg relative">
+  <header class="options">
+    <img width="32px" src="assets/log.svg" alt="logbook" class="cursor-pointer" (click)="logTodos()">
+    <svg width="32px" height="32px" viewBox="-2.16 -2.16 28.32 28.32" fill="none" xmlns="http://www.w3.org/2000/svg" class="cursor-pointer" stroke="#6F7789" (click)="goHome()">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="SVGRepo_iconCarrier"> <path d="M19 10L19 20H9M5 20L5 10L12 3L15.5 6.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+      </svg>
+    <img width="28px" src="assets/star.svg" alt="today" class="cursor-pointer" (click)="todayTodos()">
+  </header>
+    <h1 class="text-2xl font-bold text-center mb-4" id="title">{{title}}</h1>
+    <div class="relative flex items-center rounded-lg overflow-hidden">
+        <input type="text" spellcheck="false" (keydown.enter)="addTodo()" placeholder="new todo" class="w-full p-2 px-3 rounded-lg bg-background-300 h-11" id="new" [formControl]="newTodo">
+        <button class="absolute right-0 bg-background-400 text-lg font-black h-full px-1" (click)="addTodo()"><img width="35px" src="assets/plus.svg" alt="+"></button>
+    </div>
+
+    <ul class="todolist">
+        @for (todo of todoListFiltered(); track todo.id) {
+            @if (todo.editing) {
+                <!-- editando -->
+                <li class="todo-editing first:mt-4 overflow-hidden">
+                    <div class="checkbox-wrapper-43">
+                        <input id="{{todo.id}}" type="checkbox" disabled [checked]="todo.completed" (click)="toggleTodo(todo.id,todo.completed)">
+                        <label for="{{todo.id}}" class="check">
+                          <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                          </svg>
+                        </label>
+                      </div>
+                    <input type="text" placeholder="Editar tarea" spellcheck="false" [value]="todo.title" (keydown.enter)="saveTitleTodo(todo.id , $event)" (blur)="saveTitleTodo(todo.id, $event)">
+                </li>
+            } @else {
+                <!-- ya editada -->
+                <li class="todo first:mt-4 overflow-hidden" id="task">
+                    <div class="checkbox-wrapper-43">
+                        <input id="{{todo.id}}" type="checkbox" [checked]="todo.completed" (click)="toggleTodo(todo.id,todo.completed)">
+                        <label for="{{todo.id}}" class="check">
+                          <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                          </svg>
+                        </label>
+                      </div>
+                        <label class="cursor-pointer" for="{{todo.id}}">{{ todo.title }}</label>
+                      @if (!todo.completed) {<button (click)="updateTodoEditingMode(todo.id)"><img width="22px" src="assets/edit.svg" alt="Editar"></button>}
+                      @if (todo.completed) {<span class="opacity-40 mr-2 text-[0.7rem]">{{todo.date}}</span>}
+                      @if (!todo.completed) {<button class="text-red-500" (click)="removeTodo(todo.id)"><img width="35px" src="assets/trash.svg" alt="Eliminar"></button>}
+                      @if (todo.today && !todo.completed) {
+                      <svg height="20px" width="20px" version="1.1" id="{{todo.id}}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-4.79 -4.79 57.52 57.52" xml:space="preserve" fill="#fad106" stroke="#fad106" stroke-width="5" transform="rotate(0)" class=" mr-2 cursor-pointer" (click)="markToday(todo.id)">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                        <g id="SVGRepo_iconCarrier"> <path style="fill:#FAD106;" d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"/> </g>
+                      </svg>
+                    } @else if (!todo.today && !todo.completed){
+                      <svg height="20px" width="20px" version="1.1" id="{{todo.id}}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-4.79 -4.79 57.52 57.52" xml:space="preserve" fill="#fad106" stroke="#fad106" stroke-width="5" transform="rotate(0)" class=" mr-2 cursor-pointer hidden" (click)="markToday(todo.id)">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                        <g id="SVGRepo_iconCarrier"> <path style="fill:none;" d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z"/> </g>
+                      </svg>
+                    } 
+                </li>
+            }
+        }
+    </ul>
+</section>

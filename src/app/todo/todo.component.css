@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+.filters {
+    @apply flex justify-end gap-2 my-2;
+    font-family: 'Poppins',sans-serif;
+}
+
+.filters button{
+    @apply px-2 rounded-lg bg-background-300 flex-1;
+}
+
+.filters button.active{
+    @apply bg-background-400;
+}
+
+.todolist {
+    @apply flex flex-col gap-2;
+    font-family: 'Poppins', sans-serif;
+}
+
+.todolist li{
+    @apply flex bg-background-300 px-3 py-2 rounded-lg items-center gap-2 h-11 pr-[3px];
+}
+
+.todolist li.todo label{
+    @apply flex-1;
+}
+
+.todolist li.todo input[type="checkbox"] {
+    @apply w-6 h-6 cursor-pointer;
+}
+
+.todolist li.todo:hover button{
+    @apply block;
+}
+
+.todolist li.todo:hover svg{
+  @apply block;
+}
+
+.todolist li.todo button{
+    @apply hidden text-xs;
+}
+
+.todolist li.todo-editing input[type="text"]{
+    @apply w-full bg-background-300 rounded-lg outline-none;
+}
+
+.checkbox-wrapper-43{
+    width: 20px;
+    height: 20px;
+}
+
+.checkbox-wrapper-43 input[type="checkbox"] {
+  display: none;
+  visibility: hidden;
+}
+
+.checkbox-wrapper-43 label {
+  display: inline-block;
+}
+
+.checkbox-wrapper-43 .check {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+.checkbox-wrapper-43 .check:before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34,50,84,0.03);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.checkbox-wrapper-43 .check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #6F7789;
+  stroke-width: 2;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+.checkbox-wrapper-43 .check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+.checkbox-wrapper-43 .check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+.checkbox-wrapper-43 .check:hover:before {
+  opacity: 1;
+}
+.checkbox-wrapper-43 .check:hover svg {
+  stroke: #FFF;
+}
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg {
+  stroke: #FAD106;
+}
+
+.checkbox-wrapper-43 input[type="checkbox"]:disabled + .check svg {
+  stroke: #626262;
+  opacity: 0.5;
+}
+
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+
+.options{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+section header img:first-child:hover {
+  filter: drop-shadow(0 0 0.6em #51BF64);
+}
+
+section header svg:hover {
+  stroke:#ffffff;
+  filter: drop-shadow(0 0 0.3em white);
+}
+
+section header img:last-child:hover {
+  filter: drop-shadow(0 0 0.3em #FAD106)
+}
+
+.completed-todo{
+  filter: drop-shadow(0 0 0.3 #FAD106);
+}
+
+
+@media screen and (width < 490px) {
+  section{
+    width: 92%;
+  }
+}
